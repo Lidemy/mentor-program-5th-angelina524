@@ -1,5 +1,5 @@
 function printStars(n){
-    for (var i=1; i<=n; i++){
+    for (var i = 1; i <= n; i++){
         console.log("*")
     }
 }

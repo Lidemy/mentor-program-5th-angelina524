@@ -1,24 +1,19 @@
-function join(arr, concatStr) {
-    var result = ''
-    var sum = ''
-    var lastArr = arr[arr.length-1]
-    if(arr.length-1 == 0){
-        return arr+concatStr
-    }
-    for (var i=0;i<arr.length-1;i++){
-        result = arr[i]+concatStr
-        sum += result
-    }
-    return sum+lastArr
-}
-
-function repeat(str, times) {
-    var sum = ''
-    for (var i=1;i<=times;i++){
-      sum += str
-    }
-    return sum
+function join(arr, concatStr){
+  if(arr.length === 1){
+      return arr + concatStr
   }
-
-console.log(join(['a'], '!'));
-console.log(repeat('a', 5));
+  var temp = arr[0]
+  for(var i = 1; i < arr.length; i++){
+      temp += concatStr + arr[i]
+  }
+  return temp
+}
+function repeat(str, times){
+  var sum = ''
+  for(var i = 1; i <= times; i++){
+      sum += str
+  }
+  return sum
+}
+join(['a'], '!');
+repeat('a', 5);
