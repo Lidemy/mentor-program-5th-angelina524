@@ -8,12 +8,13 @@ request(
       'Client-ID': 'oeq8ksk29zz9hnioch4q8ffjhjahbw',
       Accept: 'application/vnd.twitchtv.v5+json'
     }
-  }, (error, res, body) => {
+  }, (err, res, body) => {
+    if (err) return console.log('資料抓取錯誤', err)
     let data
     try {
       data = JSON.parse(body)
     } catch (err) {
-      console.log('資料抓取錯誤', error)
+      console.log(err)
       return
     }
     for (let i = 0; i < data.top.length; i++) {

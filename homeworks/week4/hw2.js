@@ -7,7 +7,7 @@ const param2 = process.argv[4]
 
 switch (action) {
   case 'list':
-    readingList()
+    listBooks()
     break
   case 'read':
     readBook(param)
@@ -25,14 +25,15 @@ switch (action) {
     console.log('valid command:list, read, delete, create, update')
 }
 
-function readingList() {
+function listBooks() {
   request(`${url}/books?_limit=20`,
-    (error, response, body) => {
+    (err, res, body) => {
+      if (err) return console.log('資料抓取錯誤', err)
       let data
       try {
         data = JSON.parse(body)
       } catch (err) {
-        console.log('資料抓取錯誤', error)
+        console.log(err)
         return
       }
       for (let i = 0; i < data.length; i++) {
@@ -44,13 +45,14 @@ function readingList() {
 
 function readBook(id) {
   request(`${url}/books/${id}`,
-    (error, res, body) => {
-      if (res.statusCode === 404) return console.log('資料不存在')
+    (err, res, body) => {
+      if (err) return console.log('資料抓取錯誤', err)
+      if (res.statusCode === 404) return console.log('抓取失敗，找不到書籍資訊')
       let data
       try {
         data = JSON.parse(body)
       } catch (err) {
-        console.log('資料抓取錯誤', error)
+        console.log(err)
         return
       }
       console.log(`${data.name}`)
@@ -60,13 +62,10 @@ function readBook(id) {
 
 function deleteBook(id) {
   request.delete(`${url}/books/${id}`,
-    (error, res, body) => {
-      if (res.statusCode === 404) return console.log('資料不存在')
-      try {
-        console.log('資料刪除成功')
-      } catch (err) {
-        console.log('資料刪除失敗', error)
-      }
+    (err, res, body) => {
+      if (err) return console.log('資料刪除失敗', err)
+      if (res.statusCode === 404) return console.log('刪除失敗，找不到書籍資訊')
+      console.log('資料刪除成功')
     }
   )
 }
@@ -78,15 +77,16 @@ function createBook(name) {
       form: {
         name
       }
-    }, (error, res, body) => {
+    }, (err, res, body) => {
+      if (err) return console.log('資料新增失敗', err)
       let data
       try {
         data = JSON.parse(body)
-        console.log('資料新增成功')
       } catch (err) {
-        console.log('資料新增失敗', error)
+        console.log(err)
         return
       }
+      console.log('資料新增成功')
       console.log(`${data.id} ${data.name}`)
     }
   )
@@ -99,14 +99,15 @@ function updateBook(id, newName) {
       form: {
         name: newName
       }
-    }, (error, res, body) => {
-      if (res.statusCode === 404) return console.log('資料不存在')
+    }, (err, res, body) => {
+      if (err) return console.log('資料更新失敗', err)
+      if (res.statusCode === 404) return console.log('更新失敗，找不到書籍資訊')
       let data
       try {
         data = JSON.parse(body)
         console.log('資料更新成功')
       } catch (err) {
-        console.log('資料更新失敗', error)
+        console.log(err)
         return
       }
       console.log(`${data.id} ${data.name}`)
