@@ -1,0 +1,86 @@
+body {
+  background: rgba(0, 0, 0, 0.1);
+  font-family: MicrosoftJhengHei;
+}
+
+.form {
+  max-width: 645px;
+  margin: 0 auto;
+  height: 1085px;
+  background: white;
+  box-shadow: 1.8px 2.4px 5px 0 rgba(0, 0, 0, 0.3);
+  border-top: 8px solid #fad312;
+  margin-top: 129px;
+}
+
+.wrapper {
+  margin-left: 42px;
+}
+
+.form__title {
+  font-size: 36px;
+  font-weight: bold;
+  margin-top: 54px;
+  margin-bottom: 35px;
+}
+
+.form__info {
+  font-size: 14px;
+  line-height: 11px;
+}
+
+.form__notice {
+  color: #e74149;
+  font-size: 16px;
+  margin-top: 20px;
+}
+
+.input__title {
+  margin-top: 45px;
+  font-size: 20px;
+}
+
+.input span {
+  font-size: 20px;
+  color: #e74149;
+  margin-left: 6px;
+}
+
+.input > input{
+  height: 23px;
+  width: 287px;
+  border: 1px solid #d0d0d0;
+}
+
+.input input {
+  margin-top: 15px;
+}
+
+.form__input p {
+  font-size: 14px;
+}
+
+.submit-btn {
+  margin-top: 50px;
+  display: inline-block;
+  background: #fad312;
+  font-size: 15px;
+  border-radius: 3px;
+  padding: 12px 32px;
+  cursor: pointer;
+}
+
+footer {
+  color: #999999;
+  background: #000000;
+  font-size: 13px;
+  margin-top: 66px;
+  text-align: center;
+  padding: 30px;
+}
+
+@media(max-width: 768px) {
+  .wrapper {
+    margin-left: 20px;
+  }
+}
