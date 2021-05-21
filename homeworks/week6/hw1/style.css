@@ -1,9 +1,9 @@
-.navbar {
+nav {
   background: #ffffff;
   box-shadow: -1.4px -1.4px 6px 0 #97a2a0;
 }
 
-.navbar .wrapper {
+nav .wrapper {
   display: flex;
   height: 84px;
   padding: 0px 20px;
@@ -228,7 +228,7 @@ footer {
 }
 
 @media(max-width: 768px) {
-  .navbar .wrapper {
+  nav .wrapper {
     padding: 0px;
     height: 120px;
     flex-direction: column;

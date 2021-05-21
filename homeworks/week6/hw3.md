@@ -9,12 +9,24 @@
 
 ## 請問什麼是盒模型（box modal）
 - 將 HTML 裡的元素視為每一個盒子，並利用 CSS 來調整屬性
-- 盒模型由內到外包含：
-  1. 元素內容 content：以 width、height 調整大小
-  2. 內邊距 padding：content 與 border 之間的範圍
-  3. 邊距 border：將 content、padding 包起來
-  4. 外邊距 margin：與其他元素之間的空白距離
-[參考資料](https://developer.mozilla.org/zh-CN/docs/Learn/CSS/Building_blocks/The_box_model)
+- 盒模型由 content、padding、border、margin 所組成
+- 內到外包含：
+    1. 元素內容 content：以 width、height 調整大小
+    2. 內邊距 padding：content 與 border 之間的範圍
+    3. 邊距 border：將 content、padding 包起來
+    4. 外邊距 margin：與其他元素之間的空白距離
+- 元素在視覺上所佔用的空間為 width + height + padding + border
+- 撰寫方式可設定 1 至 4 個值，值的單位可為 px、%、em、rem
+    1. 1 個值：上下左右
+    2. 2 個值：上下、左右
+    3. 3 個值：上、左右、下
+    4. 4 個值：上、下、左、右
+- box-sizing 顯示模式：
+    1. `box-sizing: content-box` 為預設，保留原始寬高，為 content 寬高
+        顯示 width 100 px = content width 100 px
+    2. `box-sizing: border-box` 會調整 content 寬高，會扣除 padding、border
+        顯示 width 100 px = content 100-30 px + padding 上下 10 px + border 上下 5px
+[參考資料]([https://developer.mozilla.org/zh-CN/docs/Learn/CSS/Building_blocks/The_box_model](https://developer.mozilla.org/zh-CN/docs/Learn/CSS/Building_blocks/The_box_model))
 
 ## 請問 display: inline, block 跟 inline-block 的差別是什麼？
 ### display
@@ -50,14 +62,14 @@
 
 ### relative
 - 相對定位 `position: relative`
-- 針對自己原本的元素做定位
+- 針對自己原本的位置做定位
 - 只會改變自己的位置
 - 適用：順著排版流、以原本的位置為原點，來移動
 
 ### absolute
 - 絕對定位 `position: absolute`
-- 針對某個參考點而定位，參考點 CSS 設置 `position: relative`
-  ( 某個參考點：往上找，第一個不是 static 預設的元素 )
+- 針對某個參考點 ( 往上找，第一個不是 static 預設的元素 ) 而定位
+    例如： `position: relative`
 - 從正常的排版流程裡面抽出去，下一個元素會自動遞補
 - 若不設定參考點，元素會根據 body 來定位
 - 適用：跳脫排版流、以特定元素為原點 ( 如：上層元素 )，來移動

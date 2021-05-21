@@ -46,7 +46,7 @@ body {
   margin-left: 6px;
 }
 
-.input > input[type=text]{
+.input > input{
   height: 23px;
   width: 287px;
   border: 1px solid #d0d0d0;
