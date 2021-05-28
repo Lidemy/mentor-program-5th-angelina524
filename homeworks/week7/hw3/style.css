@@ -1,0 +1,193 @@
+html, body {
+  height: 100%;
+}
+
+body {
+  background: linear-gradient(135deg, #eaeaea, #c0d6df) fixed;
+  font-family: 'Ubuntu', sans-serif;
+}
+
+.wrapper {
+  width: 600px;
+  margin: auto;
+}
+
+.list__title {
+  margin-top: 50px;
+  font-size: 54px;
+  font-weight: 700;
+  color: #f6ae2d;
+  text-align: center;
+  text-shadow: 0.1em 0.1em 0.2em black;
+}
+
+.list__add {
+  width: 70%;
+  font-size: 26px;
+  line-height: 40px;
+  border: none;
+  border-bottom: 3px solid #4f6d7a;
+  background: none;
+  padding: 0px 20px;
+  margin: 50px 10px;
+}
+
+.list__add:focus {
+  color: white;
+  text-shadow: 0.1em 0.1em 0.2em black;
+  background: #4f6d7a;
+}
+
+.btn__add {
+  width: 65px;
+  height: 45px;
+  font-size: 26px;
+  color: #4f6d7a;
+  background: transparent;
+  border: 2px solid #4f6d7a;
+  border-radius: 5px;
+  margin-left: 20px;
+  cursor: pointer;
+  transition: .4s;
+}
+
+.btn__add:hover {
+  width: 75px;
+  height: 55px;
+  color: white;
+  background: #4f6d7a;
+}
+
+.list__items {
+  padding: 20px;
+  background: #4f6d7a;
+  box-shadow: 2px 2px 8px white;
+  border-radius: 10px;
+  font-size:  26px;
+  font-weight: 400;
+  color: white;
+  text-shadow: 0.1em 0.1em 0.2em black;
+}
+
+.list__item {
+  position: relative;
+  padding: 10px;
+}
+
+.btn__check {
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  cursor: pointer;
+  position: relative;
+}
+
+.btn__check input {
+  width: 24px;
+  height: 24px;
+  margin-right: 15px;
+}
+
+/* 文字樣式 */
+.btn__check input + span {
+  display: inline-block;
+  user-select: none; /* 防止文字被滑鼠選取反白 */
+}
+
+.btn__check input:checked + span {
+  color: gray;
+  text-decoration: line-through;
+}
+
+/* checkbox 未點選樣式 */
+.btn__check input:after {
+  content: ' ';
+  background: #f6ae2d;
+  border-radius: 5px;
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  cursor: pointer;
+  transition: background .5s;
+}
+
+.btn__check:hover input:after {
+  background: #c0d6df;
+}
+
+/* checkbox 點選後樣式 */
+.btn__check input:checked:after {
+  content: ' ';
+  background: #4f6d7a;
+  border-radius: 5px;
+  width: 24px;
+  height: 24px;
+  position: absolute;
+}
+
+.btn__check input:checked:after {
+  content: "✓";
+  color: #99948a;
+  font-size: 26px;
+}
+
+.btn__delete {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  width: 26px;
+  height: 26px;
+  cursor: pointer;
+}
+
+.btn__delete:before { 
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 5px;
+  background: #e8dab2;
+  transform: rotate(45deg);
+}
+
+.btn__delete:after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 5px;
+  background: #e8dab2;
+  transform: rotate(-45deg);
+}
+
+@media screen and (max-width: 768px) {
+  .wrapper {
+    width: 90%;
+  }
+
+  .list__title {
+    font-size: 40px;
+  }
+
+  .list__add {
+    width: 65%;
+    font-size: 20px;
+    padding: 0px 5px;
+    margin: 35px 2px;
+  }
+
+  .btn__add {
+    width: 50px;
+    height: 35px;
+    font-size: 20px;
+  }
+
+  .btn__add:hover {
+    width: 55px;
+    height: 40px;
+    font-size: 20px;
+  }
+
+  .list__items {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+}
