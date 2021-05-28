@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>todo list</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="list">
+        <div class="list__title">My Todo List</div>
+        <input class="list__add" type="text" placeholder="add a task here"><button class="btn__add">add</button>
+        <div class="list__items">
+          <div class="list__item">
+            <label class="btn__check"><input type="checkbox"><span>have breakfast</span></label>
+            <div class="btn__delete"></div>
+          </div>
+          <div class="list__item">
+            <label class="btn__check"><input type="checkbox"><span>make a daily schedule</span></label>
+            <div class="btn__delete"></div>
+          </div>
+          <div class="list__item">
+            <label class="btn__check"><input type="checkbox"><span>group meeting</span></label>
+            <div class="btn__delete"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      document.querySelector('.btn__add').addEventListener('click', (e) => {
+        const addValue = document.querySelector('.list__add').value
+        if(!addValue) return
+
+        //新增
+        const div = document.createElement('div')
+        div.classList.add('list__item')
+        div.innerHTML = `
+        <label class="btn__check"><input type="checkbox"><span>${escapeHtml(addValue)}</span></label>
+            <div class="btn__delete"></div>
+        `
+        document.querySelector('.list__items').appendChild(div)
+        document.querySelector('.list__add').value = ''  //清空
+
+        function escapeHtml(unsafe) {
+          return unsafe
+              .replace(/&/g, "&amp;")
+              .replace(/</g, "&lt;")
+              .replace(/>/g, "&gt;")
+              .replace(/"/g, "&quot;")
+              .replace(/'/g, "&#039;");
+        }
+      })
+      
+      document.querySelector('.list__items').addEventListener('click', (e) => {
+        const {target} = e
+        if(target.classList.contains('btn__delete')) {
+          target.parentNode.remove('.list__item')
+        }
+      })
+    </script>
+  </body>
+</html>

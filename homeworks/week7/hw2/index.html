@@ -1,0 +1,114 @@
+<!DOCTYPE HTML>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>餐廳官網</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
+  </head>
+  <body>
+    <nav>
+      <div class="wrapper">
+        <div class="navbar__site-name">Just A Bite!</div>
+        <ul class="navbar__list">
+          <li ><a href="#">抽個大獎</a></li>
+          <li><a href="#">我要點餐</a></li>
+          <li><a href="#">查詢訂單</a></li>
+          <li class="action"><a href="#">常見問題</a></li>
+        </ul>
+      </div>
+    </nav>
+    <main>
+      <div class="wrapper">
+        <section class="section">
+          <h2 class="section__title">FAQ - 常見問題</h2>
+          <div class="faq">
+            <div class="faq__num">Q1</div>
+            <div class="faq__item hide-content">
+              <div class="faq__item__title">如何網路訂購？</div>
+              <div class="faq__item__content">將喜愛商品加入購物車 -> 選擇付款、配送方式、指定送貨日期 -> 確認會員資料及收件資訊，訂單成立後以 email 通知。</div>
+            </div>
+          </div>
+          <div class="faq">
+            <div class="faq__num">Q2</div>
+            <div class="faq__item hide-content">
+              <div class="faq__item__title">如何辦理退貨？</div>
+              <div class="faq__item__content">如遇商品重大瑕疵、到貨毀損、數量及品項與訂購不符須辦理退換貨者，請當天私訊 Facebook 粉絲團，有客服人員為您服務，並附上訂單資訊及商品照片，逾期恕無法受理。</div>
+            </div>
+          </div>
+          <div class="faq">
+            <div class="faq__num">Q3</div>
+            <div class="faq__item hide-content">
+              <div class="faq__item__title">目前提供哪些付款方式？</div>
+              <div class="faq__item__content">目前只提供線上信用卡付，將喜愛商品加入購物車 -> 選擇付款、配送方式、指定送貨日期 -> 確認會員資料及收件資訊，訂單成立後以 email 通知。</div>
+            </div>
+          </div>
+          <div class="faq">
+            <div class="faq__num">Q4</div>
+            <div class="faq__item hide-content">
+              <div class="faq__item__title">線上刷卡如何操作呢？</div>
+              <div class="faq__item__content">選擇付款及配送方式時，點選「線上信用卡付款」，輸入信用卡資訊，刷卡完成後，可至「查詢訂單」頁面，查詢付款資訊。</div>
+            </div>
+          </div>
+          <div class="faq">
+            <div class="faq__num">Q5</div>
+            <div class="faq__item hide-content">
+              <div class="faq__item__title">目前提供哪些配送方式？</div>
+              <div class="faq__item__content">目前提供冷藏宅配、門市取貨兩種方式，購物車結帳時，請於「配送方式」欄位選取。</div>
+            </div>
+          </div>
+          <div class="faq">
+            <div class="faq__num">Q6</div>
+            <div class="faq__item hide-content">
+              <div class="faq__item__title">如何查詢目前訂單的處理情況？</div>
+              <div class="faq__item__content">請至「查詢訂單」頁面，可藉由訂單狀態、付款狀態、送貨狀態，得知目前您的訂單狀況，，當訂單狀態更新時，會以 email 通知。</div>
+            </div>
+          </div>
+          <div class="faq">
+            <div class="faq__num">Q7</div>
+            <div class="faq__item hide-content">
+              <div class="faq__item__title">訂單成立後，是否可以取消或是更改訂單數量及商品？</div>
+              <div class="faq__item__content">如因故需取消或變更訂單，請在指定到貨日 3 天前，於服務時間內通知告知客服人員，待客服人員回覆確認後，訂單取消或變更方為成立。</div>
+            </div>
+          </div>
+          <div class="faq">
+            <div class="faq__num">Q8</div>
+            <div class="faq__item hide-content">
+              <div class="faq__item__title">我想購買的商品已經缺貨，什麼時候會進貨呢？</div>
+              <div class="faq__item__content">本店使用當季新鮮食材，如遇商品為缺貨狀態，以線上開放狀態為準。</div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+    <footer>
+      <div class="footer__top">
+        <div class="wrapper">
+          <div class="footer__info">
+            <div>餐館地址: 天上地下天堂路三分之一里六段520號</div>
+            <div>訂位專線：02-1314-5566</div>
+            <div>營業時間：週一〜週五 09:00~18:00 / 週六、週日、國定假日（含連假）休息</div>
+            <div>email：service@justabite.com.tw</div>
+          </div>
+          <div>
+            <div class="footer__site">Just A Bite!</div>
+            <div>Facebook / Instagram / Youtube</div>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        Copyright © 2020 Just A Bite All Rights Reserved. 咬一口股份有限公司版權所有
+      </div>
+    </footer>
+    <script>
+      document.querySelector('.section').addEventListener('click', (e) => {
+        let element = e.target.closest('.faq').querySelector('.faq__item')
+        if(element) {
+          element.classList.toggle('hide-content')
+        }
+      })
+    </script>
+  </body>
+</html>

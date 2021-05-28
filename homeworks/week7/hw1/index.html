@@ -1,0 +1,144 @@
+<!DOCTYPE HTML>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>新拖延運動報名表單</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
+  </head>
+  <body>
+    <form action="" method="get">
+      <div class="form">
+        <div class="wrapper">
+          <div class="form__title">新拖延運動報名表單</div>
+          <div class="form__info">
+            <p>活動日期：2020/12/10 ~ 2020/12/11</p>
+            <p>活動地點：台北市大安區新生南路二段1號</p>
+          </div>
+          <div class="form__notice">* 必填</div>
+
+          <!--輸入區域-->
+          <div class="form__input">
+            <div class="input required hide-error">
+              <div class="input__title">暱稱<span>*</span></div>
+              <input type="text" name="nickname" placeholder="您的回答">
+              <div class="input__error">請輸入您的暱稱</div>
+            </div>
+
+            <div class="input required hide-error">
+              <div class="input__title">電子郵件<span>*</span></div>
+              <input type="email" name="email" placeholder="您的電子郵件">
+              <div class="input__error">請輸入您的電子郵件</div>
+            </div>
+
+            <div class="input required hide-error">
+              <div class="input__title">手機號碼<span>*</span></div>
+              <input type="text" name="phone" placeholder="您的手機號碼">
+              <div class="input__error">請輸入您的手機號碼</div>
+            </div>
+
+            <div class="input required hide-error">
+              <div class="input__title">報名類型<span>*</span></div>
+              <div class="option"><label><input type="radio" name="type"> 躺在床上用想像力實作</label></div>
+              <div class="option"><label><input type="radio" name="type"> 趴在地上滑手機找現成的</label></div>
+              <div class="input__error">請點選您的報名類型</div>
+            </div>
+
+            <div class="input required hide-error">
+              <div class="input__title">怎麼知道這個活動的？<span>*</span></div>
+              <input type="text" name="way" placeholder="您的回答">
+              <div class="input__error">請輸入您的回答</div>
+            </div>
+
+            <div class="input">
+              <div class="input__title">其他
+                <p>對活動的一些建議</p>
+              </div>
+                <input type="text" name="others" placeholder="您的回答">
+            </div>
+
+            <input type="submit" class="input__submit"></div>
+
+            <p>請勿透過表單送出您的密碼。</p>
+          </div>
+        </div>
+      </div>
+    </form>
+    <footer>© 2020 © Copyright. All rights Reserved.</footer>
+  </body>
+  <script>
+    document.querySelector('form').addEventListener('submit', (e) => {
+      e.preventDefault()
+
+      //看哪一個欄位驗證不通過
+      let hasError = false
+
+      //放結果
+      let values = {}
+
+      //從必填 required 底下找各種 type
+      const elements = document.querySelectorAll('.required')
+      for(element of elements) {
+        const textInput = element.querySelector('input[type=text]')
+        const emailInput = element.querySelector('input[type=email]')
+        const radioInput = element.querySelectorAll('input[type=radio]')
+        let isValid = true
+
+        //檢查 type 有沒有值，有值就放到 values 裡面，沒有值 isValid = false
+        if(textInput) {
+          values[textInput.name] = textInput.value
+          if(!textInput.value) {
+            isValid = false
+          }
+        }else if(emailInput) {
+          values[emailInput.name] = emailInput.value
+          if(!emailInput.value) {
+            isValid = false
+          }
+        }else if(radioInput.length) {
+
+          //檢查任何一個值是不是有打勾，有值就放到 values 裡面
+          isValid = [...radioInput].some(radio => radio.checked)
+          if(isValid) {
+            let radioContent = element.querySelector('input[type=radio]:checked')
+            values[radioContent.name] = radioContent.value
+          }
+        }else {
+          continue
+        }
+
+        //如果 isValid = false 就顯示紅字請輸入
+        if(!isValid) {
+          element.classList.remove('hide-error')
+          hasError = true
+        }else {
+          element.classList.add('hide-error')
+        }
+      }
+      
+      //其他建議
+      const othersInput = document.querySelector('input[name=others]')
+      if(!othersInput.value) {
+        values[othersInput.name] = '無'
+      }else {
+        values[othersInput.name] = othersInput.value
+      }
+
+      //如果各欄位驗證都通過 true，就 alert
+      if(!hasError) {
+        JSON.stringify(values)
+        alert(`
+        您的報名資訊如下
+        暱稱：${values.nickname}
+        電子郵件：${values.email}
+        手機號碼：${values.phone}
+        報名類型：${values.type}
+        怎麼知道這個活動的：${values.way}
+        其他建議：${values.others}
+      `)
+      }
+    })
+  </script>
+</html>
