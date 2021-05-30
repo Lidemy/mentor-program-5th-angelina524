@@ -1,3 +1,8 @@
+/* 與 footer 調整有關 */
+html,body{
+  height: 100%;
+}
+
 nav {
   background: #ffffff;
   box-shadow: -1.4px -1.4px 6px 0 #97a2a0;
@@ -52,6 +57,11 @@ nav .wrapper {
   max-width: 1280px;
   margin: 0 auto;
   padding: 0px 12px;
+}
+
+/* 與 footer 調整有關 */
+main {
+  min-height: 100%;
 }
 
 /*FAQ 區塊切版*/
