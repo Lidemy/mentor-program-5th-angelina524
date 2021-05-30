@@ -67,6 +67,7 @@ body {
   font-weight: 400;
   color: white;
   text-shadow: 0.1em 0.1em 0.2em black;
+  word-break: break-all; /* 防止文字炸框 */
 }
 
 .list__item {
@@ -92,6 +93,7 @@ body {
 .btn__check input + span {
   display: inline-block;
   user-select: none; /* 防止文字被滑鼠選取反白 */
+  padding: 16px; /* 調整文字部分 */
 }
 
 .btn__check input:checked + span {

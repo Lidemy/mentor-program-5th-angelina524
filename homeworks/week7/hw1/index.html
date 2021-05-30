@@ -23,7 +23,7 @@
           <div class="form__input">
             <div class="input required hide-error">
               <div class="input__title">暱稱<span>*</span></div>
-              <input type="text" name="nickname" placeholder="您的回答">
+              <input type="text" name="nickname" placeholder="您的回答" autofocus>
               <div class="input__error">請輸入您的暱稱</div>
             </div>
 
@@ -35,7 +35,7 @@
 
             <div class="input required hide-error">
               <div class="input__title">手機號碼<span>*</span></div>
-              <input type="text" name="phone" placeholder="您的手機號碼">
+              <input type="text" name="phone" placeholder="您的手機號碼" pattern="^09\d{8}$">
               <div class="input__error">請輸入您的手機號碼</div>
             </div>
 
@@ -80,7 +80,7 @@
 
       //從必填 required 底下找各種 type
       const elements = document.querySelectorAll('.required')
-      for(element of elements) {
+      for(const element of elements) {
         const textInput = element.querySelector('input[type=text]')
         const emailInput = element.querySelector('input[type=email]')
         const radioInput = element.querySelectorAll('input[type=radio]')
@@ -118,13 +118,9 @@
         }
       }
       
-      //其他建議
+      //其他建議，使用三元運算子
       const othersInput = document.querySelector('input[name=others]')
-      if(!othersInput.value) {
-        values[othersInput.name] = '無'
-      }else {
-        values[othersInput.name] = othersInput.value
-      }
+      values[othersInput.name] = othersInput.value ? othersInput.value : '無'
 
       //如果各欄位驗證都通過 true，就 alert
       if(!hasError) {
