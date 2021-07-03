@@ -1,0 +1,238 @@
+<!DOCTYPE HTML>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>TODO List</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      const baseURL = "http://mentor-program.co/mtr04group1/angelina/week12/hw2"
+      let id = 1;
+
+      $(document).ready(() => {
+
+        //載入 get-todo
+        const searchParams = new URLSearchParams(window.location.search)
+        const todoId = searchParams.get('id')
+        if(todoId) {
+          $.getJSON(`${baseURL}/api_get-todo.php?id=${todoId}`, data => {
+            const todoList = JSON.parse(data.data.todoList)
+            restoreTodoList(todoList)
+            id = todoList.length + 1
+          })
+        }
+
+        //checkbox 標記完成、未完成
+        $('.list-group').on('click', 'input[type=checkbox]', e => {
+          let list = $(e.target).closest('.list')
+          let content = $(e.target).closest('.list-content')
+          list.toggleClass('checked')
+          content.toggleClass('text-decoration-line-through text-secondary')
+        })
+
+        //新增
+        $('.add-list-form').submit(e => {
+          e.preventDefault()
+          let value = $('input[type=text]').val()
+          let isHide = false
+          if(value) {
+            if($('.btn-show-completed').hasClass('show')) {
+              isHide = true
+            }
+            addList(id, value, isHide)
+            $('input[type=text]').val('')
+            id++
+          }
+        })
+
+        //編輯
+        $('.list-group').on('click', '.btn-edit-list', e => {
+          let list = $(e.target).closest('.list')
+          let text = list.find('.list-desc').text()
+          list.find('.list-desc').addClass('visually-hidden')
+          list.find('.edit-list').val(text)
+          list.find('.edit-list').removeClass('visually-hidden')
+          list.find('.btn-edit-list').addClass('visually-hidden')
+
+          $('.list-group').keydown(e => {
+            if (e.keyCode == 13) {
+              let value = list.find('.edit-list').val()
+              if(value !== '') {
+                list.find('.list-desc').text(value)
+              }
+              list.find('.list-desc').removeClass('visually-hidden')
+              list.find('.edit-list').addClass('visually-hidden')
+              list.find('.btn-edit-list').removeClass('visually-hidden')
+            }
+          })
+        })
+
+        //刪除
+        $('.list-group').on('click', '.btn-delete-list', e => {
+          $(e.target).closest('.list').remove()
+        })
+
+        //顯示全部
+        $('.control-btns').on('click', '.btn-show-all', e => {
+          $('.btn-show-active').removeClass('show')
+          $('.btn-show-completed').removeClass('show')
+          $('.list').removeClass('visually-hidden')
+        })   
+        
+        //顯示未完成
+        $('.control-btns').on('click', '.btn-show-active', e => {
+          $('.btn-show-active').addClass('show')
+          $('.btn-show-completed').removeClass('show')
+          $('.list').removeClass('visually-hidden')
+          $('.checked').closest('.list').addClass('visually-hidden')
+        })        
+
+        //顯示已完成
+        $('.control-btns').on('click', '.btn-show-completed', e => {
+          $('.btn-show-active').removeClass('show')
+          $('.btn-show-completed').addClass('show')
+          $('.list').addClass('visually-hidden')
+          $('.checked').closest('.list').removeClass('visually-hidden')
+        })        
+
+        //清空全部
+        $('.control-btns').on('click', '.btn-clear-all', e => {
+          $('.list-group').empty()
+          id = 1
+        })
+
+        //儲存 add-todo
+        $('.control-btns').on('click', '.btn-save', e => {
+          const list = $('.list-group').children()
+          const todoList = []
+          $.each(list, (i, item) => {
+            const id = $(item).find('.form-check-input').attr('data-id')
+            const content = $(item).find('.list-desc').text()
+            const isChecked = $(item).hasClass('checked')
+            todoList.push({
+              id: id,
+              content: content,
+              isChecked: isChecked
+            })
+          })
+          const data = JSON.stringify(todoList)
+          if(data === "[]") {
+            alert('Please input something cool')
+            return
+          }
+          $.ajax({
+            method: 'POST',
+            url: `${baseURL}/api_add-todo.php`,
+            data: {
+              todoList: data
+            },
+            success: res => {
+              const resId = res.id
+              alert(`Saved Successfully! Please remember your id=${resId} to get your information next time:)`)
+              window.location = 'index.html?id=' + resId
+            },
+            error: () => {
+              alert('Please try again:(')
+            }
+          })
+        })
+      })
+
+      function escapeHTML(toOutput){
+				if(toOutput) {
+					return toOutput.replace(/\&/g, '&amp;').replace(/\</g, '&lt;').replace(/\>/g, '&gt;').replace(/\"/g, '&quot;').replace(/\'/g, '&#x27').replace(/\//g, '&#x2F');
+				}
+			}
+
+      function addList(id, value, isHide, isChecked, isAppend) {
+        let html = `
+          <li class="list ${isHide ? 'visually-hidden' : ''} ${isChecked ? 'checked' : ''} d-flex justify-content-between list-group-item border-0">
+            <div class="list-content ${isChecked ? 'text-decoration-line-through text-secondary' : ''}">
+              <input class="form-check-input me-3" ${isChecked ? 'checked' : ''} type="checkbox" data-id=${id}>
+              <span class="list-desc">${escapeHTML(value)}</span>
+              <input class="edit-list visually-hidden" type="text" value="">
+            </div>
+            <div class="d-flex align-items-start">
+              <button class="btn-edit-list px-2 border-0 bg-transparent">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                  <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                </svg>
+              </button>
+              <button class="btn-delete-list border-0 bg-transparent">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                  <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                </svg>
+              </button>
+            </div>
+          </li>
+        `
+        isAppend ? $('.list-group').append(html) : $('.list-group').prepend(html)
+      }
+
+      function restoreTodoList(todoList) {
+        for(let i=0; i<todoList.length; i++) {
+          let id = todoList[i].id
+          let value = todoList[i].content
+          let isChecked = todoList[i].isChecked
+          addList(id, value, false, isChecked, true)
+        }
+      }
+    </script>
+	</head>
+	<body>
+    <div class="card w-75 m-auto mt-5 border border-5 border-dark">
+      <div class="card-header p-5">
+        <div class="text-center pb-3">
+          <h1>My Todo List</h1>
+        </div>
+        <form class="add-list-form d-flex">
+          <input type="text" name="input" placeholder="Let's input something cool" class="m-2 border-0 shadow-0 form-control w-75 rounded-pill">
+          <button type="submit" class="m-2 p-2 btn btn-dark w-25 rounded-pill fw-bold">＋</button>
+        </form>
+      </div>
+      <div class="control-btns d-flex justify-content-between align-items-center card-body bg-secondary text-white">
+        <div>
+          <button class="btn-show-all border-0 bg-transparent">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-journal-text" viewBox="0 0 16 16">
+              <path d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
+              <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
+              <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
+            </svg>
+          </button>
+          <button class="btn-show-active border-0 bg-transparent">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-journal" viewBox="0 0 16 16">
+              <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
+              <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
+            </svg>
+          </button>
+          <button class="btn-show-completed border-0 bg-transparent">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-journal-check" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M10.854 6.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 8.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+              <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
+              <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
+            </svg>
+          </button>
+        </div>
+        <div>
+          <button class="btn-clear-all border-0 bg-transparent">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-folder-x" viewBox="0 0 16 16">
+              <path d="M.54 3.87.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3h3.982a2 2 0 0 1 1.992 2.181L15.546 8H14.54l.265-2.91A1 1 0 0 0 13.81 4H2.19a1 1 0 0 0-.996 1.09l.637 7a1 1 0 0 0 .995.91H9v1H2.826a2 2 0 0 1-1.991-1.819l-.637-7a1.99 1.99 0 0 1 .342-1.31zm6.339-1.577A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981l.006.139C1.72 3.042 1.95 3 2.19 3h5.396l-.707-.707z"/>
+              <path d="M11.854 10.146a.5.5 0 0 0-.707.708L12.293 12l-1.146 1.146a.5.5 0 0 0 .707.708L13 12.707l1.146 1.147a.5.5 0 0 0 .708-.708L13.707 12l1.147-1.146a.5.5 0 0 0-.707-.708L13 11.293l-1.146-1.147z"/>
+            </svg>
+          </button>
+          <button class="btn-save border-0 bg-transparent">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-cloud-arrow-up-fill" viewBox="0 0 16 16">
+              <path d="M8 2a5.53 5.53 0 0 0-3.594 1.342c-.766.66-1.321 1.52-1.464 2.383C1.266 6.095 0 7.555 0 9.318 0 11.366 1.708 13 3.781 13h8.906C14.502 13 16 11.57 16 9.773c0-1.636-1.242-2.969-2.834-3.194C12.923 3.999 10.69 2 8 2zm2.354 5.146a.5.5 0 0 1-.708.708L8.5 6.707V10.5a.5.5 0 0 1-1 0V6.707L6.354 7.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="card-body p-1">
+        <ul class="list-group fs-5">
+        </ul>
+      </div>
+    </div>
+	</body>
+</html>

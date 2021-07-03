@@ -1,0 +1,125 @@
+<!DOCTYPE HTML>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>留言板</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<script>
+			const baseURL = "http://mentor-program.co/mtr04group1/angelina/week12/hw1"
+			const site_key = "nana"
+      let lastId = null
+			let totalComment = 0
+			let isEnd = 0
+
+			$(document).ready(()=> {
+				getComments()
+
+				$('.comments').on('click', '.more-comments-btn', e => {
+					$('.more-comments-btn').hide()
+					getComments()
+				})
+
+        $('.add-comment-form').submit(e => {
+					e.preventDefault()
+					addComment()
+        })
+			})
+
+			function escapeHTML(toOutput){
+				if(toOutput) {
+					return toOutput.replace(/\&/g, '&amp;').replace(/\</g, '&lt;').replace(/\>/g, '&gt;').replace(/\"/g, '&quot;').replace(/\'/g, '&#x27').replace(/\//g, '&#x2F');
+				}
+			}
+
+			function appendCommentToDOM(container, comment, isPrepend) {
+				const html = `
+					<div class="card mt-3">
+						<div class="card-body">
+							<h5 class="card-title">${escapeHTML(comment.nickname)}</h5>
+							<p class="card-text">${escapeHTML(comment.content)}</p>
+						</div>
+					</div>
+				`
+        isPrepend ? container.prepend(html) : container.append(html)
+			}
+
+			function getCommentsAPI(before, cb) {
+        let url = `${baseURL}/api_comments.php?site_key=${site_key}`
+        if(before) {
+          url += '&before=' + before
+        }
+				$.ajax({
+          url
+				}).done(data => {
+					if(!data.ok) {
+						alert(data.message)
+						return
+					}
+					cb(data)
+				})
+			}
+
+			function getComments() {
+				const commentDOM = $('.comments')
+        getCommentsAPI(lastId, data=> {
+					totalComment = data.count
+          const comments = data.discussions
+          for(let comment of comments) {
+						appendCommentToDOM(commentDOM, comment)
+					}
+					let length = comments.length
+					isEnd += 5
+
+					if(isEnd >= totalComment) {
+						$('.more-comments-btn').hide()
+					} else {
+						lastId = comments[length-1].id
+						commentDOM.append(`<button class="btn btn-primary mt-3 mb-3 more-comments-btn" type="button">載入更多</button>`)
+					}
+        })
+			}
+			
+			function addComment() {
+				const commentDOM = $('.comments')
+				const newCommentData = {
+					site_key: site_key,
+					nickname: $('input[name=nickname]').val(),
+					content: $('textarea[name=content]').val()
+				}
+				$.ajax({
+					method: "POST",
+					url: `${baseURL}/api_add-comments.php`,
+					data: newCommentData
+				}).done(data => {
+					if (!data.ok) {
+						alert(data.message)
+						return
+					}
+					$('input[name=nickname]').val('')
+					$('textarea[name=content]').val('')
+					appendCommentToDOM(commentDOM, newCommentData, true)
+				})
+			}
+		</script>
+	</head>
+	<body>
+		<div class="container">
+			<form class="add-comment-form">
+				<div class="form-group pt-3 pb-3">
+					<label for="form-nickname" class="form-label">暱稱</label>
+					<input name="nickname" type="text" class="form-control" id="form-nickname">
+				</div>
+				<div class="form-group pb-3">
+					<label for="content-textarea" class="form-label">留言內容</label>
+					<textarea name="content" class="form-control" id="content-textarea" rows="3"></textarea>
+				</div>
+				<button type="submit" class="btn btn-primary">Submit</button>
+			</form>
+			<div class="comments">
+			</div>
+		</div>
+	</body>
+</html>
