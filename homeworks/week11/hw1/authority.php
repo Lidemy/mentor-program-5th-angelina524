@@ -17,9 +17,9 @@
 
   $stmt = $conn->prepare(
     'SELECT ' .
-    'A.id AS id, U.username AS username, A.role as role, A.add_own as add_own, A.edit_own as edit_own, A.delete_own as delete_own, A.edit_all as edit_all, A.delete_all as delete_all ' .
+    'U.id AS id, U.username AS username, A.role, A.add_own, A.edit_own, A.delete_own, A.edit_all, A.delete_all ' .
     'FROM angelina_board_authority AS A ' .
-    'LEFT JOIN angelina_board_users AS U ON A.username = U.username ' .
+    'LEFT JOIN angelina_board_users AS U ON U.id = A.id ' .
     'ORDER BY username ASC ' .
     'LIMIT ? OFFSET ?'
   );
@@ -70,10 +70,11 @@
                   <option value="normal" <?php if($row['role'] === 'normal') {echo 'selected';}?>>使用者</option>
                   <option value="suspend" <?php if($row['role'] === 'suspend') {echo 'selected';}?>>停權者</option>
                   <option value="editor" <?php if($row['role'] === 'editor') {echo 'selected';}?>>編輯者</option>
+                  <option value="flexible" <?php if($row['role'] === 'flexible') {echo 'selected';}?>>自訂者</option>
                 </select>
               </td>
               <td>
-                <?php if($row['role'] === 'editor') { ?>
+                <?php if($row['role'] === 'suspend'|| $row['role'] === 'editor' || $row['role'] === 'flexible') { ?>
                   <select name="add_own">
                     <option value="1" <?php if($row['add_own'] === 1) {echo 'selected';} ?>>Y</option>
                     <option value="0" <?php if($row['add_own'] === 0) {echo 'selected';} ?>>N</option>
@@ -81,7 +82,7 @@
                 <?php } ?>
               </td>
               <td>
-                <?php if($row['role'] === 'suspend'|| $row['role'] === 'editor') { ?>
+                <?php if($row['role'] === 'suspend'|| $row['role'] === 'editor' || $row['role'] === 'flexible') { ?>
                   <select name="edit_own" size="1">
                     <option value="1" <?php if($row['edit_own'] === 1) {echo 'selected';} ?>>Y</option>
                     <option value="0" <?php if($row['edit_own'] === 0) {echo 'selected';} ?>>N</option>
@@ -89,7 +90,7 @@
                 <?php } ?>
               </td>
               <td>
-                <?php if($row['role'] === 'suspend'|| $row['role'] === 'editor') { ?>
+                <?php if($row['role'] === 'suspend'|| $row['role'] === 'flexible') { ?>
                   <select name="delete_own" size="1">
                     <option value="1" <?php if($row['delete_own'] === 1) {echo 'selected';} ?>>Y</option>
                     <option value="0" <?php if($row['delete_own'] === 0) {echo 'selected';} ?>>N</option>
@@ -97,7 +98,7 @@
                 <?php } ?>
               </td>
               <td>
-                <?php if($row['role'] === 'editor') { ?>
+                <?php if($row['role'] === 'editor' || $row['role'] === 'flexible') { ?>
                   <select name="edit_all" size="1">
                     <option value="1" <?php if($row['edit_all'] === 1) {echo 'selected';} ?>>Y</option>
                     <option value="0" <?php if($row['edit_all'] === 0) {echo 'selected';} ?>>N</option>
@@ -105,7 +106,7 @@
                 <?php } ?>
               </td>
               <td>
-                <?php if($row['role'] === 'editor') { ?>
+                <?php if($row['role'] === 'flexible') { ?>
                   <select name="delete_all" size="1">
                     <option value="1" <?php if($row['delete_all'] === 1) {echo 'selected';} ?>>Y</option>
                     <option value="0" <?php if($row['delete_all'] === 0) {echo 'selected';} ?>>N</option>
@@ -113,7 +114,7 @@
                 <?php } ?>
               </td>
               <td>
-                <input type="hidden" name="id" value="<?php echo $row['id']?>">
+                <input type="hidden" name="id" value="<?php echo escape($row['id'])?>">
                 <input class="table__submit-btn" type="submit" value="更新">
               </td>
             </form>
@@ -132,16 +133,16 @@
       ?>
       <div class="page">
         <div class="page-info">
-          <span>總共 <?php echo $count?> 有筆資料，頁數：<?php echo $page?> / <?php echo $total_page?></span>
+          <span>總共 <?php echo escape($count)?> 有筆資料，頁數：<?php echo escape($page)?> / <?php echo escape($total_page)?></span>
         </div>
         <div class="paginator">
           <?php if($page != 1) { ?>
             <a href="authority.php">第一頁</a>
-            <a href="authority.php?page=<?php echo $page-1?>">上一頁</a>
+            <a href="authority.php?page=<?php echo escape($page)-1?>">上一頁</a>
           <?php } ?>
           <?php if($page != $total_page) { ?>
-            <a href="authority.php?page=<?php echo $page+1?>">下一頁</a>
-          <a href="authority.php?page=<?php echo $total_page?>">最後一頁</a>
+            <a href="authority.php?page=<?php echo escape($page)+1?>">下一頁</a>
+          <a href="authority.php?page=<?php echo escape($total_page)?>">最後一頁</a>
           <?php } ?>
         </div>
       </div>

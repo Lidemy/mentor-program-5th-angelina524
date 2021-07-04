@@ -17,7 +17,7 @@
 
   $stmt = $conn->prepare(
     'SELECT * FROM angelina_blog_articles ' .
-    'WHERE is_deleted IS NULL ' .
+    'WHERE is_deleted=0 ' .
     'ORDER BY id DESC ' .
     'LIMIT ? OFFSET ?'
   );
@@ -72,7 +72,7 @@
             <?php } ?>
           </div>
           <?php
-            $sql = "SELECT COUNT(id) AS count FROM angelina_blog_articles WHERE is_deleted IS NULL";
+            $sql = "SELECT COUNT(id) AS count FROM angelina_blog_articles WHERE is_deleted=0";
             $stmt->prepare($sql);
             $result = $stmt->execute();
             $result = $stmt->get_result();
