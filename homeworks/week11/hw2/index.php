@@ -10,7 +10,7 @@
 
   $stmt = $conn->prepare(
     'SELECT * FROM angelina_blog_articles ' .
-    'WHERE is_deleted IS NULL ' .
+    'WHERE is_deleted=0 ' .
     'ORDER BY id DESC ' .
     'LIMIT 5'
   );

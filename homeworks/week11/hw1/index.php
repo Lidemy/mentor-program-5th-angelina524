@@ -114,15 +114,15 @@
             
             <!-- 編輯 / 刪除留言 -->
             <?php if(check_edit_all_authority($username)) { ?>
-              <a class="edit-btn" href="update_comment.php?id=<?php echo $row['id']?>">編輯</a>
+              <a class="edit-btn" href="update_comment.php?id=<?php echo escape($row['id'])?>">編輯</a>
             <?php } else if (check_edit_own_authority($username) && $row['username'] === $username) { ?>
-              <a class="edit-btn" href="update_comment.php?id=<?php echo $row['id']?>">編輯</a>
+              <a class="edit-btn" href="update_comment.php?id=<?php echo escape($row['id'])?>">編輯</a>
             <?php } ?>
 
             <?php if(check_delete_all_authority($username)) { ?>
-              <a class="edit-btn" href="handle_delete-comment.php?id=<?php echo $row['id']?>">刪除</a>
+              <a class="edit-btn" href="handle_delete-comment.php?id=<?php echo escape($row['id'])?>">刪除</a>
             <?php } else if (check_delete_own_authority($username) && $row['username'] === $username) { ?>
-              <a class="edit-btn" href="handle_delete-comment.php?id=<?php echo $row['id']?>">刪除</a>
+              <a class="edit-btn" href="handle_delete-comment.php?id=<?php echo escape($row['id'])?>">刪除</a>
             <?php } ?>
 
             <div class="comment__content"><?php echo escape($row['content']); ?></div>
@@ -141,16 +141,16 @@
       ?>
       <div class="page">
         <div class="page-info">
-          <span>總共 <?php echo $count?> 有筆留言，頁數：<?php echo $page?> / <?php echo $total_page?></span>
+          <span>總共 <?php echo escape($count)?> 有筆留言，頁數：<?php echo escape($page)?> / <?php echo escape($total_page)?></span>
         </div>
         <div class="paginator">
           <?php if($page != 1) { ?>
             <a href="index.php">首頁</a>
-            <a href="index.php?page=<?php echo $page-1?>">上一頁</a>
+            <a href="index.php?page=<?php echo escape($page)-1?>">上一頁</a>
           <?php } ?>
           <?php if($page != $total_page) { ?>
-            <a href="index.php?page=<?php echo $page+1?>">下一頁</a>
-          <a href="index.php?page=<?php echo $total_page?>">最後一頁</a>
+            <a href="index.php?page=<?php echo escape($page)+1?>">下一頁</a>
+          <a href="index.php?page=<?php echo escape($total_page)?>">最後一頁</a>
           <?php } ?>
         </div>
       </div>

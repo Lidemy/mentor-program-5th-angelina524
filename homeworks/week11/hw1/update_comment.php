@@ -41,7 +41,7 @@
       </div>
       <form method="POST" action="handle_update-comment.php">
         <div class="form__title">編輯留言</div>
-        <div class="form__welcome">Hello! <?php echo $user['nickname']; ?></div>
+        <div class="form__welcome">Hello! <?php echo escape($user['nickname']); ?></div>
         <?php
         if(!empty($_GET['errCode'])) {
           $code = $_GET['errCode'];

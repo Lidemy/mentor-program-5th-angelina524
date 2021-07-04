@@ -1,5 +1,7 @@
 <?php
+  session_start();
   require_once('conn.php');
+  require_once('check_permission.php');
 
   if(empty($_POST['title']) || empty($_POST['content'])) {
     header("Location: update-article.php?errCode=1&id=" . $_GET['id']);
