@@ -67,7 +67,7 @@ export function init(options) {
       for (let comment of comments) {
         appendCommentToDOM(commentDOM, comment)
       }
-      const { length } = comments.length
+      let length = comments.length
       isEnd += 5
 
       if (isEnd >= totalComment) {
