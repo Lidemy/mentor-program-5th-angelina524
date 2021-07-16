@@ -1,0 +1,147 @@
+<!DOCTYPE HTML>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Twitch Top Games</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <nav>
+      <div class="navbar__list"></div>
+    </nav>
+    <main>
+      <div class="title" id="roll__top">Twitch Top Games</div>
+      <section class="section">
+        <div class="section__title">
+          <h2></h2>
+          <p>Top 20 popular live streams sorted by current viewers</p>
+        </div>
+        <div class="streams"></div>
+        <button class="btn__more">SHOW MORE</button>
+      </section>
+    </main>
+    <script>
+      const apiUrl = 'https://api.twitch.tv/kraken'
+      const errorMessage = '系統不穩定，請再試一次'
+      let offset = 0
+      let activeGameName = ''
+      let isEnd = false
+
+      getTopGames()
+
+      //執行：取得前五名
+      async function getTopGames() {
+        const response = await fetch(`${apiUrl}/games/top?limit=5`, {
+          headers: {
+            'Client-ID': 'oeq8ksk29zz9hnioch4q8ffjhjahbw',
+            'Accept': 'application/vnd.twitchtv.v5+json'
+          }
+        })
+        try {
+          const data = await response.json()
+          appendNavbar(data.top)
+        } catch(err) {
+          alert(errorMessage)
+        }
+      }
+
+      // 取得前五名 -> 放到 navbar 中 -> title 先顯示第一個
+      function appendNavbar (games) {
+        for(let game of games) {
+          let gameName = game.game.name
+          let gamePic = game.game.box.large
+          let element = document.createElement('div')
+          element.innerHTML = `
+          <div class="list__info">
+            <div class="list__pic">
+              <div class="cover">
+                <img src="${gamePic}" alt="list-img">
+              </div>
+              <div class="back">
+                <img src="${gamePic}" alt="list-img">
+              </div>
+            </div>
+            <div class="list__txt">${gameName}</div>
+          </div>
+          `
+          document.querySelector('.navbar__list').appendChild(element)
+        }
+        changeGame(games[0].game.name)
+      }
+  
+      //list 加上監聽 -> 代換 title
+      document.querySelector('.navbar__list').addEventListener('click', (e) => {
+        document.querySelector("#roll__top").scrollIntoView(true)
+        let element = e.target.closest('.list__info')
+        element.querySelector('.list__txt')
+        const gameName = element.querySelector('.list__txt').innerText
+        changeGame(gameName)
+      })
+
+      //執行：代換 title -> 放上 streams
+      function changeGame(gameName) {
+        document.querySelector('.section__title h2').innerText = gameName
+        document.querySelector('.streams').innerHTML = ''
+        activeGameName = gameName
+        getStreams(gameName)
+      }
+
+      //執行：取得 streams
+      async function getStreams(gameName) {
+        const response = await fetch(`${apiUrl}/streams/?limit=20&game=${encodeURIComponent(gameName)}&offset=${offset}`, {
+          headers: {
+            'Client-ID': 'oeq8ksk29zz9hnioch4q8ffjhjahbw',
+            'Accept': 'application/vnd.twitchtv.v5+json'
+          }
+        })
+        try {
+          const data = await response.json()
+          appendStreams(data.streams)
+        } catch(err) {
+          alert(errorMessage)
+        }
+      }
+
+      //執行：放上 streams
+      function appendStreams(streams) {
+        if(streams.length < 20) {
+          isEnd = true
+        }
+        for(let stream of streams) {
+          let item = document.createElement('div')
+          document.querySelector('.streams').appendChild(item)
+          item.outerHTML = `
+            <div class="stream">
+            <div class="stream__pic">
+              <img src="${stream.preview.large}" alt="stream">
+            </div>
+            <div class="stream__info">
+              <div class="stream__avatar">
+                <img src="${stream.channel.logo}" alt="avatar">
+              </div>
+              <div class="stream__txt">
+                <div class="stream__title">${stream.channel.status}</div>
+                <div class="stream__channel">${stream.channel.name}</div>
+              </div>
+            </div>
+            </div>
+          `
+        }
+      }
+
+      //get more streams
+      document.querySelector('.btn__more').addEventListener('click', (e) => {
+        getStreams(activeGameName)
+        offset+= 20
+        if(isEnd) {
+          document.querySelector('.btn__more').classList.add('hide')
+        }
+      })
+    </script>
+  </body>
+</html>
