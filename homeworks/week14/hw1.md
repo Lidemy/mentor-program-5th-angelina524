@@ -1,6 +1,6 @@
 ## hw1：短網址系統設計
 
-[架構圖](https://i.imgur.com/DM5f24K.png)
+[架構圖](https://i.imgur.com/wS3oFvZ.png)
 
 ### 為什麼需要短網址
 相較於長網址，短網址更容易顯示、記憶、分享、散佈，使用者輸入也較不會出錯，甚至隱藏關聯的 URL
