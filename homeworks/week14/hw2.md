@@ -4,8 +4,8 @@
 - 依照參考的第二篇文章，匯出匯入資料庫、filezilla 上傳檔案
 - 修改 conn.php 檔案及一點 style
 - 總共部署兩份作業，完成
-- [blog]([http://angelinahsu.tw/blog/index.php](http://angelinahsu.tw/blog/index.php))
-- [twitch]([http://angelinahsu.tw/twitch/index.html](http://angelinahsu.tw/twitch/index.html))
+- [blog](http://angelinahsu.tw/blog/index.php)
+- [twitch](http://angelinahsu.tw/twitch/index.html)
 
 ### 心得
 - 這次直接照著學長姐的文章慢慢的操作，加上沒有跌跌撞撞遇到奇怪的問題，一路順順的完成，花較長時間大概就是等折扣碼而已，文章裡面都寫的淺顯易懂，就是造福後人啊！學長姐萬歲～
