@@ -50,8 +50,8 @@ globalEC: {
 ```
 globalEC: {
   VO: {
-		a: 1,
-		fn: function
+    a: 1,
+    fn: function
   },
   scopeChain: [globalEC.VO]
 }
@@ -63,23 +63,23 @@ globalEC: {
 ```
 fnEC: {
   AO: {
-		a: undefined,
-		fn2: function
+    a: undefined,
+    fn2: function
   },
-	scopeChain: [fnEC.AO, fn.[[Scope]]]
-						= [fnEC.AO, globalEC.VO]
+  scopeChain: [fnEC.AO, fn.[[Scope]]]
+            = [fnEC.AO, globalEC.VO]
 }
 
 globalEC: {
   VO: {
-		a: 1,
-		fn: function
+    a: 1,
+    fn: function
   },
   scopeChain: [globalEC.VO]
 }
 
 fn.[[Scope]] = globalEC.scope
-						 = [globalEC.VO]
+            = [globalEC.VO]
 ```
 
 ### 執行階段：
@@ -97,23 +97,23 @@ fn.[[Scope]] = globalEC.scope
 ```
 fnEC: {
   AO: {
-		a: 5 => 6,
-		fn2: function
+    a: 5 => 6,
+    fn2: function
   },
-	scopeChain: [fnEC.AO, fn.[[Scope]]]
-						= [fnEC.AO, globalEC.VO]
+  scopeChain: [fnEC.AO, fn.[[Scope]]]
+            = [fnEC.AO, globalEC.VO]
 }
 
 globalEC: {
   VO: {
-		a: 1,
-		fn: function
+    a: 1,
+    fn: function
   },
   scopeChain: [globalEC.VO]
 }
 
 fn.[[Scope]] = globalEC.scope
-						 = [globalEC.VO]
+            = [globalEC.VO]
 ```
 
 ### 編譯階段：
@@ -124,28 +124,28 @@ fn2: {
   AO: {
   }
   scopeChain: [fn2EC.AO, fn2.[[Scope]]]
-						= [fn2EC.AO, fnEC.AO, globalEC.VO]
+            = [fn2EC.AO, fnEC.AO, globalEC.VO]
 }
 
 fnEC: {
   AO: {
-		a: 6,
-		fn2: function
+    a: 6,
+    fn2: function
   },
-	scopeChain: [fnEC.AO, fn.[[Scope]]]
-						= [fnEC.AO, globalEC.VO]
+  scopeChain: [fnEC.AO, fn.[[Scope]]]
+            = [fnEC.AO, globalEC.VO]
 }
 
 globalEC: {
   VO: {
-		a: 1,
-		fn: function
+    a: 1,
+    fn: function
   },
   scopeChain: [globalEC.VO]
 }
 
 fn.[[Scope]] = globalEC.scope
-						 = [globalEC.VO]
+            = [globalEC.VO]
 ```
 
 ### 執行階段：
@@ -159,29 +159,29 @@ fn2: {
   AO: {
   }
   scopeChain: [fn2EC.AO, fn2.[[Scope]]]
-						= [fn2EC.AO, fnEC.AO, globalEC.VO]
+            = [fn2EC.AO, fnEC.AO, globalEC.VO]
 }
 
 fnEC: {
   AO: {
-		a: 20,
-		fn2: function
+    a: 20,
+    fn2: function
   },
-	scopeChain: [fnEC.AO, fn.[[Scope]]]
-						= [fnEC.AO, globalEC.VO]
+  scopeChain: [fnEC.AO, fn.[[Scope]]]
+            = [fnEC.AO, globalEC.VO]
 }
 
 globalEC: {
   VO: {
-		a: 1,
-		fn: function,
-		b: 100
+    a: 1,
+    fn: function,
+    b: 100
   },
   scopeChain: [globalEC.VO]
 }
 
 fn.[[Scope]] = globalEC.scope
-						 = [globalEC.VO]
+            = [globalEC.VO]
 ```
 
 - `console.log(a)` ⇒ fn2EC.AO 沒有 ⇒ 透過 scopeChain ⇒ fnEC.AO 有 ⇒ 輸出 20
@@ -190,24 +190,24 @@ fn.[[Scope]] = globalEC.scope
 ```
 fnEC: {
   AO: {
-		a: 20,
-		fn2: function
+    a: 20,
+    fn2: function
   },
-	scopeChain: [fnEC.AO, fn.[[Scope]]]
-						= [fnEC.AO, globalEC.VO]
+  scopeChain: [fnEC.AO, fn.[[Scope]]]
+            = [fnEC.AO, globalEC.VO]
 }
 
 globalEC: {
   VO: {
-		a: 1,
-		fn: function,
-		b: 100
+    a: 1,
+    fn: function,
+    b: 100
   },
   scopeChain: [globalEC.VO]
 }
 
 fn.[[Scope]] = globalEC.scope
-						 = [globalEC.VO]
+            = [globalEC.VO]
 ```
 
 - fn function 執行完畢 pop off
@@ -215,9 +215,9 @@ fn.[[Scope]] = globalEC.scope
 ```
 globalEC: {
   VO: {
-		a: 1,
-		fn: function,
-		b: 100
+    a: 1,
+    fn: function,
+    b: 100
   },
   scopeChain: [globalEC.VO]
 }
@@ -229,9 +229,9 @@ globalEC: {
 ```
 globalEC: {
   VO: {
-		a: 10,
-		fn: function,
-		b: 100
+    a: 10,
+    fn: function,
+    b: 100
   },
   scopeChain: [globalEC.VO]
 }
