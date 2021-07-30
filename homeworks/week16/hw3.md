@@ -28,11 +28,11 @@ console.log(b)
 - `var a = 1` ⇒ 宣告一個變數 a
 - `function fn()` ⇒ 宣告一個函式 fn
 
-``` js
+```
 globalEC: {
   VO: {
-		a: undefined,
-		fn: function
+    a: undefined,
+    fn: function
   },
   scopeChain: [globalEC.VO]
 }
@@ -47,7 +47,7 @@ globalEC: {
     - global scope：scope 內有 ⇒ 返回 fn 的值 ⇒ 呼叫 function
 - 進入 fn function
 
-``` js
+```
 globalEC: {
   VO: {
 		a: 1,
@@ -60,7 +60,7 @@ globalEC: {
 ### 編譯階段：
 - 初始化
 
-``` js
+```
 fnEC: {
   AO: {
 		a: undefined,
@@ -94,7 +94,7 @@ fn.[[Scope]] = globalEC.scope
     - fn2 scope：scope 內有 ⇒ 返回 fn 的值 ⇒ 呼叫 function
 - 進入 fn2 function
 
-``` js
+```
 fnEC: {
   AO: {
 		a: 5 => 6,
@@ -119,7 +119,7 @@ fn.[[Scope]] = globalEC.scope
 ### 編譯階段：
 - 初始化
 
-``` js
+```
 fn2: {
   AO: {
   }
@@ -154,7 +154,7 @@ fn.[[Scope]] = globalEC.scope
 - `a = 20` ⇒ fn2EC.AO 沒有 ⇒ 透過 scopeChain ⇒ fnEC.AO 有 ⇒ hoisting ⇒ LHS 引用 ⇒ 賦值
 - `b = 100` ⇒  fn2EC.AO 沒有 ⇒ 透過 scopeChain ⇒ fnEC.AO 沒有 ⇒ globalEC.VO 沒有 ⇒ hoisting ⇒ globalEC.VO 內宣告變數 b ⇒ LHS 引用 ⇒ 非嚴格模式下，賦值 `b = 100` ( 嚴格模式下，返回 `ReferenceError: c is not defined` )
 
-``` js
+```
 fn2: {
   AO: {
   }
@@ -187,7 +187,7 @@ fn.[[Scope]] = globalEC.scope
 - `console.log(a)` ⇒ fn2EC.AO 沒有 ⇒ 透過 scopeChain ⇒ fnEC.AO 有 ⇒ 輸出 20
 - fn2 function 執行完畢 pop off
 
-``` js
+```
 fnEC: {
   AO: {
 		a: 20,
@@ -212,7 +212,7 @@ fn.[[Scope]] = globalEC.scope
 
 - fn function 執行完畢 pop off
 
-``` js
+```
 globalEC: {
   VO: {
 		a: 1,
@@ -226,7 +226,7 @@ globalEC: {
 - `console.log(a)` ⇒ 輸出 1
 - `a = 10` ⇒ LHS 引用 ⇒ 賦值
 
-``` js
+```
 globalEC: {
   VO: {
 		a: 10,
