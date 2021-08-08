@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<head>
+  <%- include('../template/head') %>
+</head>
+<html>
+  <div class="title">To start loving your life</div>
+  <%- include('../template/navbar') %>
+  <main>
+    <div class="dashboard__wrapper">
+      <div class="dashboard__title">Dashboard</div>
+      <table class="dashboard__table">
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Img Url</th>
+          <th>Probability</th>
+          <th>Update</th>
+          <th>Delete</th>
+        </tr>
+        <% prizes.forEach(prize => { %>
+          <tr>
+            <td>
+              <div><%- prize.name %></div>
+            </td>
+            <td>
+              <div><%- prize.description %></div>
+            </td>
+            <td>
+              <img class="dashboard__img" src="<%- prize.imgUrl %>">
+            </td>
+            <td>
+              <div><%- prize.probability %></div>
+            </td>
+            <td>
+              <a class="dashboard__update" href="/updatePrize/<%= prize.id %>">update</a>
+            </td>
+            <td>
+              <a class="dashboard__delete" href="/deletePrize/<%= prize.id %>">delete</a>
+            </td>
+          </tr>
+        <% }) %>
+      </table>
+    </div>
+    <div class="decoration"></div>
+  </main>
+</html>

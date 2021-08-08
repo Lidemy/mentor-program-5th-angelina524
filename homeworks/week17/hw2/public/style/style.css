@@ -1,0 +1,181 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #8c1c13;
+  font-family: 'Caveat', cursive, 微軟正黑體;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.title {
+  text-align: center;
+  padding: 40px;
+  color: white;
+  text-shadow: 0 0 0.2em #e7d7c1;
+  font-size: 50px;
+  font-weight: 700;
+}
+
+.nav__btns {
+  display: flex;
+  justify-content: flex-end;
+  padding: 15px;
+  background: #a78a7f;
+  font-size: 20px;
+}
+
+.nav__btn {
+  margin: 0 15px;
+  padding: 2px 15px;
+  color: white;
+  background: #735751;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: .25s;
+}
+
+.nav__btn:hover {
+  color: #735751;
+  background: white;
+}
+
+main {
+  min-height: 100%;
+}
+
+/* user, add prize */
+.form__user ,
+.form__prize {
+  width: 100%;
+  padding: 20px;
+  color: #582f0e;
+  background: #e7d7c1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.form__user__title, 
+.form__prize__title {
+  padding: 20px;
+  font-size: 36px;
+}
+
+.form__remind {
+  color: #8c1c13;
+}
+
+.input__user, 
+.input__prize {
+  font-size: 28px;
+  margin: 20px;
+  background: none;
+  border: 2px solid #582f0e;
+}
+
+.form__user__submit-btn, 
+.form__prize__submit-btn {
+  padding: 5px 30px;
+  margin: 20px 0;
+  background: #a78a7f;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 20px;
+  font-family: 'Caveat';
+  transition: .25s;
+}
+
+.form__user__submit-btn:hover, 
+.form__prize__submit-btn:hover {
+  background: white;
+  color: #a78a7f;
+}
+
+.decoration {
+  margin: 15px 0;
+  width: 100%;
+  height: 5px;
+  background: #e7d7c1;
+}
+
+.inputs {
+  display: flex;
+  text-align: center;
+}
+
+/* dashboard */
+.dashboard__wrapper {
+  width: 100%;
+  padding: 20px;
+  color: #582f0e;
+  background: #e7d7c1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.dashboard__title {
+  padding: 20px;
+  font-size: 36px;
+}
+
+.dashboard__table {
+  width: 100%;
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+table {
+  color: #283618;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  border: 2px solid #283618;
+  padding: 15px;
+}
+
+td select {
+  background: none;
+  border: none;
+  padding-right: 4px;
+}
+
+.dashboard__img {
+  max-width: 100px;
+  width: 100%;
+  height: 100%;
+}
+
+.dashboard__update, 
+.dashboard__delete {
+  padding: 5px 10px;
+  font-size: 14px;
+  border: none;
+  background: #a78a7f;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background .25s;
+}
+
+.dashboard__update:hover, 
+.dashboard__delete:hover {
+  background: white;
+  color: #a78a7f;
+}

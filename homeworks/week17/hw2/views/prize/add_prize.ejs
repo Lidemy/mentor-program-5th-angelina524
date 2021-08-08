@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<head>
+  <%- include('../template/head') %>
+</head>
+<html>
+  <div class="title">To start loving your life</div>
+  <%- include('../template/navbar') %>
+  <main>
+    <form class="form__prize" method="POST" action="/addPrize">
+      <div class="form__prize__title">Add Prize</div>
+      <% if (errorMessage && errorMessage.length > 0) { %>
+        <div class="form__remind"><%= errorMessage %></div>
+      <% } %>
+      <div class="inputs">
+        <div>name<input class="input__prize" name="name" type="text"></div>
+        <div>description<input class="input__prize" name="description" type="text"></div>
+        <div>imgUrl<input class="input__prize" name="imgUrl" type="text"></div>
+        <div>probability<input class="input__prize" name="probability" type="text"></div>
+      </div>
+      <input class="form__prize__submit-btn" type="submit" value="submit">
+    </form>
+    <div class="decoration"></div>
+  </main>
+</html>

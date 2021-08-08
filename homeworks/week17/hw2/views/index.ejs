@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<head>
+  <%- include('./template/head') %>
+  <style>
+    .wrapper {
+      min-height: 500px;
+      width: 100%;
+      padding: 20px;
+      color: #582f0e;
+      background: #e7d7c1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      font-weight: 700;
+    }
+
+    .prize {
+      width: 100%;
+      max-width: 500px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .prize__title {
+      font-size: 50px;
+    }
+
+    .prize__img {
+      max-width: 200px;
+      width: 100%;
+      height: 100%;
+    }
+
+    .get-btn {
+      padding: 5px 30px;
+      margin: 20px 0;
+      background: #a78a7f;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 20px;
+      font-family: 'Caveat';
+      transition: .25s;
+    }
+
+    .get-btn:hover {
+      background: white;
+      color: #a78a7f;
+    }
+  </style>
+</head>
+<html>
+  <div class="title">To start loving your life</div>
+  <main>
+    <div class="wrapper">
+      <div class="prize"></div>
+      <button class="get-btn">start</button>
+    </div>
+    <div class="decoration"></div>
+  </main>
+  <script>
+    const apiUrl = 'http://localhost:5001/api'
+    const errorMessage = '系統不穩定，請再試一次'
+    const btn = document.querySelector('.get-btn')
+
+    btn.addEventListener('click', getPrize)
+
+    async function getPrize() {
+      const response = await fetch(`${apiUrl}`)
+      try {
+        const data = await response.json()
+        let prize = document.querySelector('.prize')
+        const prizeHTML = `
+          <div class="prize__title">${data.name}</div>
+          <img class="prize__img" src="${data.imgUrl}">
+          <div class="prize__desc">${data.description}</div>
+        `
+        prize.innerHTML = `${prizeHTML}`
+      } catch(err) {
+        alert(errorMessage)
+      }
+    }
+  </script>
+</html>
