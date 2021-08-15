@@ -1,0 +1,500 @@
+html, body {
+  height: calc(100vh - 160px);
+  margin: 0;
+  padding: 0;
+  background: #f0efeb;
+  font-family: "Hind Siliguri", sans-serif, 微軟正黑體;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+nav {
+  padding: 15px;
+  height: 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 700;
+}
+
+.navbar__info {
+  display: flex;
+  align-items: center;
+}
+
+.navbar__homepage {
+  text-shadow: 0 0 0.2em white;
+  margin-right: 5px;
+  padding: 5px;
+  font-size: 28px;
+  color: #b2967d;
+  text-decoration: none;
+  transition: 0.25s;
+}
+
+.navbar__homepage:hover {
+  color: white;
+  background: #e6beae;
+  text-shadow: none;
+  border-radius: 8px;
+}
+
+.navbar__options-left a, 
+.navbar__options-right a {
+  padding: 6px 10px;
+  margin: 2px;
+  font-size: 18px;
+  color: #e6beae;
+  background: white;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: 0.25s;
+}
+
+.navbar__options-left a:hover,
+.navbar__options-right a:hover {
+  color: white;
+  background: #e6beae;
+}
+
+.banner {
+  width: 100%;
+  height: 350px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f8f9fa;
+}
+.banner__block {
+  width: 150px;
+  height: 150px;
+  position: relative;
+  background: #e6beae;
+  right: 60px;
+  top: 30px;
+}
+.banner__block:after {
+  width: 150px;
+  height: 150px;
+  box-shadow: 1px 1px 3px #cccccc;
+  position: absolute;
+  content: "";
+  left: -30px;
+  top: -30px;
+  border: 5px solid white;
+}
+.banner__desc {
+  position: relative;
+  font-size: 42px;
+  font-weight: 700;
+  color: grey;
+  top: 20px;
+}
+.banner__desc:before {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  content: "";
+  top: 80px;
+  right: 20px;
+  background: #f5e6e8;
+  transition: 0.2s;
+}
+.banner__desc:after {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  content: "";
+  top: 100px;
+  right: 100px;
+  background: #faf3dd;
+  transition: 0.2s;
+}
+.banner:hover .banner__desc:before {
+  top: 100px;
+}
+.banner:hover .banner__desc:after {
+  top: 80px;
+}
+
+footer {
+  padding: 20px;
+  height: 60px;
+  color: grey;
+  background: #e6beae;
+  text-align: center;
+  font-weight: 700;
+}
+
+main {
+  min-height: 100%;
+}
+
+/* 註冊、登入 */
+.form__user {
+  padding: 80px 0;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  color: #495057;
+  background: #f5e6e8;
+  border-radius: 30px;
+  font-size: 20px;
+  font-weight: 700;
+  text-align: center;
+  transition: .25s
+}
+
+.form__user:hover {
+  box-shadow: 3px 3px 5px #f8f9fa;
+}
+
+.form__user__title {
+  font-size: 28px;
+}
+
+.form__remind {
+  text-shadow: 0 0 0.2em black;
+  color: #fec5bb;
+  text-align: center;
+}
+
+.input__user {
+  margin: 20px;
+  padding: 10px 20px;
+  background: white;
+  border-radius: 5px;
+  border: 2px solid grey;
+}
+
+.form__user__submit-btn {
+  margin: 15px 0;
+  padding: 8px 40px;
+  color: grey;
+  background: white;
+  border: none;
+  font-size: 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: .25s;
+}
+
+.form__user__submit-btn:hover {
+  color: white;
+  background: #e6beae;
+}
+
+/* 文章列表、管理後台 */
+.articleList__wrapper {
+  width: 100%;
+  max-width: 900px;
+  padding: 20px;
+  margin: 0 auto;
+  color: #495057;
+  background: #f5e6e8;
+}
+
+.title {
+  padding: 20px;
+  font-size: 28px;
+  text-align: center;
+  font-weight: 700;
+}
+
+.list {
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 18px;
+  transition: .25s;
+}
+
+.list:hover {
+  background: white;
+  border-radius: 8px;
+}
+
+.list__info {
+  display: flex;
+  align-items: flex-start;
+  font-weight: 700;
+  width: 100%;
+}
+
+.article__category {
+  padding: 5px;
+  border-radius: 8px;
+  color: white;
+  background: #fec5bb;
+}
+
+.list__title {
+  flex: 1;
+  margin-left: 10px;
+  padding-top: 5px;
+  color: #495057;
+  text-decoration: none;
+  width: 100%;
+}
+
+.list__time {
+  margin-left: 10px;
+  width: 20%;
+  padding-top: 5px;
+}
+
+.article__edit-btn, 
+.article__delete-btn{
+  margin-right: 5px;
+  padding: 4px 10px;
+  color: #b2967d;
+  background: #faf3dd;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: 0.25s;
+}
+
+.article__edit-btn:hover, 
+.article__delete-btn:hover {
+  color: #faf3dd;
+  background: #b2967d;
+}
+
+/* 首頁最新五筆 */
+.article__warpper {
+  width: 100%;
+  max-width: 900px;
+  padding: 20px;
+  margin: 0 auto;
+}
+
+.article {
+  margin: 30px 0;
+  padding: 10px;
+  background: #f5e6e8;
+  border-radius: 10px;
+}
+
+.article__top {
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 18px;
+  border-bottom: 5px solid white;
+}
+
+.article__down {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+
+}
+
+.list__content {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+}
+
+.article__read-btn {
+  margin: 10px 0;
+  padding: 8px;
+  color: #b2967d;
+  border: 2px solid #b2967d;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+  text-align: center;
+  transition: 0.25s;
+}
+
+.article__read-btn:hover {
+  border: 2px solid #faf3dd;
+  background: #faf3dd;
+}
+
+/* 閱讀單篇文章 */
+.article__content {
+  margin-top: 20px;
+  padding: 20px;
+}
+
+/* 新增文章 */
+.article__wrapper {
+  padding: 40px 0;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  color: #495057;
+  background: #f5e6e8;
+  border-radius: 30px;
+  font-weight: 700;
+  text-align: center;
+  transition: .25s
+}
+
+.article__wrapper:hover {
+  box-shadow: 3px 3px 5px #f8f9fa;
+}
+
+.form__article__title {
+  font-size: 28px;
+}
+
+.form__add-article {
+  padding: 0 25px;
+  display: flex;
+  flex-direction: column;
+}
+
+.input__add-category, 
+.input__add-title,
+textarea {
+  margin: 5px 0;
+  padding: 10px 20px;
+  color: grey;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+  font-size: 18px;
+}
+
+.input__add-category {
+  width: 30%;
+}
+
+.ck-editor__editable_inline {
+  min-height: 200px;
+}
+
+.form__article__submit-btn { 
+  width: 100%;
+  margin-top: 30px;
+  padding: 8px;
+  color: #b2967d;
+  border: 2px solid #b2967d;
+  background: none;
+  border-radius: 5px;
+  font-weight: 700;
+  text-align: center;
+  font-size: 18px;
+  transition: .25s
+}
+
+.form__article__submit-btn:hover {
+  background: #faf3dd;
+} 
+
+/* 分類專區 */
+.form__category {
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 3px solid #e6beae;
+  border-radius: 10px;
+  font-size: 20px;
+}
+
+.input__category {
+  width: 80%;
+  padding: 8px 10px;
+  border: 2px solid #e6beae;
+  background: #e6beae;
+  border-radius: 5px;
+}
+
+.form__category__submit-btn {
+  margin: 15px 0;
+  padding: 8px 30px;
+  color: white;
+  background: #e6beae;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: .25s;
+}
+
+.form__category__submit-btn:hover {
+  color: grey;
+  background: white;
+}
+
+.category {
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  font-size: 18px;
+  transition: .25s;
+}
+
+.category:hover {
+  background: white;
+  border-radius: 10px;
+}
+
+.category__name {
+  flex: 1;
+  color: #495057;
+  padding: 4px 10px;
+  font-weight: 700;
+}
+
+.category__time {
+  display: flex;
+}
+
+.category__time-desc {
+  padding: 4px 10px;
+}
+
+.category__edit-btn, 
+.category__delete-btn {
+  margin-right: 5px;
+  padding: 4px 10px;
+  color: #b2967d;
+  border: 2px solid #b2967d;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 700;
+  transition: 0.25s;
+}
+
+.category__edit-btn:hover, 
+.category__delete-btn:hover {
+  color: #faf3dd;
+  background: #b2967d;
+}
+
+/* 關於我 */
+.about__wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.about__me {
+  padding: 20px;
+  font-size: 20px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.block {
+  width: 0%;
+  height: 4px;
+  background: transparent;
+  transition: .5s;
+}
+
+.about__wrapper:hover .block {
+  width: 100%;
+  background: white;
+}

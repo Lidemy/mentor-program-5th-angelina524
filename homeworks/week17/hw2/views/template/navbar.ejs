@@ -1,0 +1,11 @@
+<nav>
+  <div class="nav__btns">
+  <% if (!username) { %>
+    <a class="nav__btn" href="/login">Login</a>
+  <% } else { %>
+    <a class="nav__btn" href="/dashboard">Dashboard</a>
+    <a class="nav__btn" href="/addPrize">Add</a>
+    <a class="nav__btn" href="/logout">Logout</a>
+  <% } %>
+  </div>
+</nav>

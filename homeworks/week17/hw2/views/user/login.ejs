@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<head>
+  <%- include('../template/head') %>
+</head>
+<html>
+  <div class="title">To start loving your life</div>
+  <%- include('../template/navbar') %>
+  <main>
+    <form class="form__user" method="POST" action="/login">
+      <div class="form__user__title">Login</div>
+      <% if (errorMessage && errorMessage.length > 0) { %>
+        <div class="form__remind"><%= errorMessage %></div>
+      <% } %>
+      <div>username：<input class="input__user" name="username" type="text"></div>
+      <div>password：<input class="input__user" name="password" type="password"></div>
+      <input class="form__user__submit-btn" type="submit" value="submit">
+    </form>
+    <div class="decoration"></div>
+  </main>
+</html>
